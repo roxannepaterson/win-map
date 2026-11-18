@@ -129,6 +129,10 @@
     .top{ padding:12px 14px; }
   }
 
+  /* shown inside another page (the BD Hub opportunity view): just the win map itself */
+  body.embed .top, body.embed .side, body.embed .foot-note, body.embed #copyLink, body.embed #delBtn, body.embed .empty{ display:none !important; }
+  body.embed .app{ display:block; min-height:0; } body.embed .main{ padding:0; overflow:visible; } body.embed .sheet{ max-width:none; }
+
   @media print{
     @page{ size:A4 landscape; margin:8mm; }
     body{ background:#fff; font-size:10px; }
@@ -472,6 +476,7 @@
     b.textContent = ok ? "Link copied" : "Copy failed"; setTimeout(() => b.textContent = "Copy link", 1800);
   }
 
+  if (new URLSearchParams(location.search).get("embed") === "1") document.body.classList.add("embed");
   build();
   $("newBtn").onclick = () => newMap(); $("delBtn").onclick = del; $("copyLink").onclick = copyLink;
   $("printBtn").onclick = () => { flushPending(); fields.forEach(f => { if (f.el.tagName === "TEXTAREA") grow(f.el); }); window.print(); };
